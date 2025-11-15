@@ -3,7 +3,7 @@ from .models import Post
 from django.utils import timezone
 
 def home_view(request):
-    posts = Post.objects.all().order_by('-published_at')
+    posts = Post.objects.filter(is_published=True).order_by('-published_at')
     return render(request, "blog/home.html", {"posts": posts})
 
 def add_post(request):
