@@ -5,7 +5,7 @@
 <div class="form-wrapper">
     <h2 class="form-title">Edit Post</h2>
 
-    <form method="POST" class="add-form">
+    <form method="POST" class="add-form" enctype="multipart/form-data">
         {% csrf_token %}
 
         <label>Title</label>
@@ -14,11 +14,20 @@
         <label>Content</label>
         <textarea name="content" rows="6" required>{{ post.content }}</textarea>
 
+        <label>Current Poster</label>
+        {% if post.poster %}
+            <img src="{{ post.poster.url }}" class="post-image" style="margin-bottom:15px;">
+        {% else %}
+            <p>No image uploaded.</p>
+        {% endif %}
+
+        <label>Change Poster</label>
+        <input type="file" name="poster">
+
         <label>Published</label>
         <div class="checkbox-row">
             <input type="checkbox" name="is_published" {% if post.is_published %}checked{% endif %}>
         </div>
-
 
         <button type="submit" class="submit-btn">Update</button>
     </form>

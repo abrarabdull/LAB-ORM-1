@@ -6,8 +6,15 @@
 <div class="posts-container">
     {% for post in posts %}
     <div class="post-card">
-        <h3 class="post-title">{{ post.title }}</h3>
-        <p class="post-content">{{ post.content }}</p>
+       {% if post.poster %}
+            <img src="{{ post.poster.url }}" class="post-image"/>
+        {% else %}
+            <img src="/media/images/default.jpg" class="post-image"/>
+        {% endif %}
+
+        <a class="post-link" href="{% url 'blog:post_detail' post.id %}">
+            <h3 class="post-title">{{ post.title }}</h3>
+        </a>
         <p class="post-date">{{ post.published_at }}</p>
         <hr>
     </div>

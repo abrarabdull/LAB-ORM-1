@@ -7,5 +7,5 @@ urlpatterns = [
     path("manage/", views.manage_posts, name="manage_posts"),
     path('edit/<int:post_id>/', views.edit_post, name='edit_post'),
     path('delete/<int:post_id>/', views.delete_post, name='delete_post'),
-
+    path("post/<int:post_id>/", views.post_detail_view, name="post_detail"),
 ]

@@ -13,6 +13,7 @@ def add_post(request):
         Post.objects.create(
             title=title,
             content=content,
+            poster = request.FILES.get("poster"),
             published_at=timezone.now()
         )
 
@@ -31,12 +32,19 @@ def edit_post(request, post_id):
         post.title = request.POST.get("title")
         post.content = request.POST.get("content")
         post.is_published = bool(request.POST.get("is_published"))
+        if request.FILES.get("poster"):
+            post.poster = request.FILES.get("poster")
 
         post.save()
-        return redirect("blog:manage_posts")
+        return redirect("blog:post_detail", post_id=post_id)
 
     return render(request, "blog/edit_post.html", {"post": post})
+
 def delete_post(request, post_id):
     post = Post.objects.get(id=post_id)
     post.delete()
     return redirect("blog:manage_posts")
+
+def post_detail_view(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    return render(request, "blog/post_detail.html", {"post": post})
